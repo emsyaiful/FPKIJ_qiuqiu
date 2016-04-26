@@ -40,6 +40,7 @@ public class Write implements Runnable {
             {						
                 String input = chat.nextLine();	//SET NEW VARIABLE input TO THE VALUE OF WHAT THE CLIENT TYPED IN
                 String[] part = input.split(" ");
+                int length = part.length;
                 String command = part[0];
                 String user = part[1];
                 String salt = Character.toString(user.charAt(0));
@@ -56,9 +57,15 @@ public class Write implements Runnable {
                     out.println(input);//SEND IT TO THE SERVER
                     out.flush();//FLUSH THE STREAM
                 }else if (command.equalsIgnoreCase("pm")) {
-                    System.out.println(input);
-                    out.println(input);//SEND IT TO THE SERVER
-                    out.flush();//FLUSH THE STREAM
+                    String data = part[1];
+                    for (int i = 2; i < length; i++) {
+                        data = data+" "+part[i];
+                    }
+                    // Ekripsinya disini
+                    data = command+" "+data;
+                    System.out.println(data);
+//                    out.println(input);//SEND IT TO THE SERVER
+//                    out.flush();//FLUSH THE STREAM
                 }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
