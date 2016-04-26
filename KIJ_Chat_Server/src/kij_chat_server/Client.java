@@ -45,6 +45,8 @@ public class Client implements Runnable{
 //					out.println("You Said: " + input);//RESEND IT TO THE CLIENT
 //					out.flush();//FLUSH THE STREAM
                         // param LOGIN <userName> <pass>
+                        System.out.println("INI INPUT");
+                        System.out.println(input);
                         if (input.split(" ")[0].toLowerCase().equals("login") == true) {
                             String[] vals = input.split(" ");
                             if (this._userlist.contains(new Pair(vals[1], vals[2])) == true) {
@@ -85,7 +87,7 @@ public class Client implements Runnable{
                         // param PM <userName dst> <message>
                         if (input.split(" ")[0].toLowerCase().equals("pm") == true) {
                             String[] vals = input.split(" ");
-
+                            System.out.println("COBA");
                             boolean exist = false;
 
                             for(Pair<Socket, String> cur : _loginlist) {

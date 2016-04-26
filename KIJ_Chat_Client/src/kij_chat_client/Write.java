@@ -5,12 +5,17 @@
  */
 package kij_chat_client;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Scanner;
+import static kij_chat_client.EncryptionUtil.PUBLIC_KEY_FILE;
+import static kij_chat_client.EncryptionUtil.encrypt;
 //import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
@@ -56,16 +61,31 @@ public class Write implements Runnable {
                     System.out.println(input);
                     out.println(input);//SEND IT TO THE SERVER
                     out.flush();//FLUSH THE STREAM
+                    
                 }else if (command.equalsIgnoreCase("pm")) {
-                    String data = part[1];
-                    for (int i = 2; i < length; i++) {
-                        data = data+" "+part[i];
+                    String data = part[2];
+                    if(length > 3)
+                    {
+                        for (int i = 3; i < length; i++) 
+                        {
+                            data = data+" "+part[i];
+                        }
                     }
+                    else data = part[2];
+//                    System.out.println(data);
                     // Ekripsinya disini
-                    data = command+" "+data;
-                    System.out.println(data);
-//                    out.println(input);//SEND IT TO THE SERVER
-//                    out.flush();//FLUSH THE STREAM
+                    ObjectInputStream inputStream = null;
+
+      // Encrypt the string using the public key
+                    inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
+                    final PublicKey publicKey = (PublicKey) inputStream.readObject();
+                    final byte[] cipherText = encrypt(data, publicKey);
+                    
+                    String Coba = new String(cipherText,"ISO-8859-1");
+                    input = command+" "+user+" "+Coba;
+//                    System.out.println(input);
+                    out.println(input);//SEND IT TO THE SERVER
+                    out.flush();//FLUSH THE STREAM
                 }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
