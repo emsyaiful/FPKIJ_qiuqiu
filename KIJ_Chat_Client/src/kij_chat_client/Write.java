@@ -11,7 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import static jdk.nashorn.tools.ShellFunctions.input;
+//import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
  *
@@ -48,14 +48,18 @@ public class Write implements Runnable {
                         salt = salt+Character.toString(user.charAt(i));
                     }             
                 }
-                
-                String passwd = part[2];
-                passwd = SHA1(salt+passwd);
-                input = command+" "+user+" "+passwd;
-                System.out.println(input);
-                out.println(input);//SEND IT TO THE SERVER
-                out.flush();//FLUSH THE STREAM
-
+                if (command.equalsIgnoreCase("login")) {
+                    String passwd = part[2];
+                    passwd = SHA1(salt+passwd);
+                    input = command+" "+user+" "+passwd;
+                    System.out.println(input);
+                    out.println(input);//SEND IT TO THE SERVER
+                    out.flush();//FLUSH THE STREAM
+                }else if (command.equalsIgnoreCase("pm")) {
+                    System.out.println(input);
+                    out.println(input);//SEND IT TO THE SERVER
+                    out.flush();//FLUSH THE STREAM
+                }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
                         keepGoing = false;
