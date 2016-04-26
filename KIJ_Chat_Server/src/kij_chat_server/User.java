@@ -5,6 +5,10 @@
  */
 package kij_chat_server;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.DigestException;
 import java.util.ArrayList;
 
@@ -15,15 +19,20 @@ import java.util.ArrayList;
 public class User {
     // User-Password list
     private ArrayList<Pair<String,String>> _userlist = new ArrayList<>();
-    User() {
-        _userlist.add(new Pair("Admin", "0e49e69fe0fceca50a8ed501c006522168964ffd"));
-        _userlist.add(new Pair("Andi", "142768920414808a76f384b2d170c989aad5f698"));
-        _userlist.add(new Pair("Budi", "ccbc7d8a8c2df26e1672a7e15538fd070ff2c599"));
-        _userlist.add(new Pair("Rudi", "d63a753732e85d15f0bb17d46cb73dcfda4da5d8"));
-        _userlist.add(new Pair("Luci", "aa774cc14c683e9730b4d6c36dbb38770653f136"));
+    User() throws FileNotFoundException, IOException {
+        String listUser = "../listUser.txt";
+        String line = null;
+        FileReader fr = new FileReader(listUser);
+        BufferedReader br = new BufferedReader(fr);
+        while ((line = br.readLine()) != null) {            
+            String[] part = line.split(" ");
+            String user = part[0];
+            String passwd = part[1];
+            _userlist.add(new Pair(user, passwd));
+        }
     }
     
-    public ArrayList<Pair<String,String>> getUserList() {
+    public ArrayList<Pair<String,String>> getUserList() throws FileNotFoundException, IOException {
         return _userlist;
     }
 }
