@@ -6,6 +6,7 @@
 package kij_chat_client;
 
 /*import java.net.Socket;*/
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.security.PrivateKey;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 import static kij_chat_client.EncryptionUtil.PRIVATE_KEY_FILE;
 import static kij_chat_client.EncryptionUtil.decrypt;
 import org.apache.commons.codec.binary.Base64;
+import static kij_chat_client.input.*;
 
 /**
  *
@@ -57,15 +59,22 @@ public class Read implements Runnable {
                         String[] dapet = input.split("_");
                         input = dapet[1];
                         String path_to_priv = "C:/keys/"+dapet[0]+"_private.key";
-//                        byte[] test = input.getBytes("ISO-8859-1");
-                        byte[] decodedBytes = Base64.decodeBase64(input);
+                         byte[] decodedBytes = Base64.decodeBase64(input);
 //                        System.out.println(input);
 //                        System.out.println("panjaang"+decodedBytes.length);
                         ObjectInputStream inputStream = null;
-                        inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
+                        File f = new File(path_to_priv);
+                        if(f.exists() && !f.isDirectory()) {
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
+                        }else{
+                            get_File(dapet[0]+"_private.key");
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
+                        }
+//                        byte[] test = input.getBytes("ISO-8859-1");
                         final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
                         final String plainText = decrypt(decodedBytes, privateKey);
-                        System.out.println(plainText);
+                        String show = dapet[0]+": "+plainText;
+                        System.out.println(show);
                     }
                 }
             }

@@ -5,6 +5,7 @@
  */
 package kij_chat_client;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -19,6 +20,7 @@ import static kij_chat_client.EncryptionUtil.PRIVATE_KEY_FILE;
 import static kij_chat_client.EncryptionUtil.PUBLIC_KEY_FILE;
 import static kij_chat_client.EncryptionUtil.decrypt;
 import static kij_chat_client.EncryptionUtil.encrypt;
+import static kij_chat_client.input.get_File;
 import org.apache.commons.codec.binary.Base64;
 //import static jdk.nashorn.tools.ShellFunctions.input;
 
@@ -82,6 +84,13 @@ public class Write implements Runnable {
 
       // Encrypt the string using the public key
                     String path_to_pub = "C:/keys/"+user+"_public.key";
+                    File f = new File(path_to_pub);
+                    if(f.exists() && !f.isDirectory()) {
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                        }else{
+                            get_File(user+"_public.key");
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                        }
                     inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
                     final PublicKey publicKey = (PublicKey) inputStream.readObject();
                     final byte[] cipherText = encrypt(data, publicKey);

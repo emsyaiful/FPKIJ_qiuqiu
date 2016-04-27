@@ -30,8 +30,8 @@ import javax.crypto.Cipher;
  */
 public class EncryptionUtil {
      public static final String ALGORITHM = "RSA";
-     public static final String PRIVATE_KEY_FILE = "C:/keys/Andi_private.key";
-     public static final String PUBLIC_KEY_FILE = "C:/keys/Andi_public.key";
+     public static final String PRIVATE_KEY_FILE = "C:/keys/Budi_private.key";
+     public static final String PUBLIC_KEY_FILE = "C:/keys/Budi_public.key";
      
       public static void generateKey() {
           try {
