@@ -105,6 +105,7 @@ public class Client implements Runnable{
 //                                    byte[] test = messageOut.getBytes("ISO-8859-1");
 ////                                    System.out.println("yang diterima server"+test);
 //                                    System.out.println("panjaangdiserver"+test.length);
+                                    messageOut = vals[1]+"_"+messageOut;
                                     outDest.println(messageOut);
                                     outDest.flush();
                                     exist = true;

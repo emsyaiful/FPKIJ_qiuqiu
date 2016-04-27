@@ -81,7 +81,8 @@ public class Write implements Runnable {
                     ObjectInputStream inputStream = null;
 
       // Encrypt the string using the public key
-                    inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
+                    String path_to_pub = "C:/keys/"+user+"_public.key";
+                    inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
                     final PublicKey publicKey = (PublicKey) inputStream.readObject();
                     final byte[] cipherText = encrypt(data, publicKey);
                     

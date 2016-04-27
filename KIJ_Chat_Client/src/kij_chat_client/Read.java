@@ -54,15 +54,17 @@ public class Read implements Runnable {
                     }
                     else
                     {
+                        String[] dapet = input.split("_");
+                        input = dapet[1];
+                        String path_to_priv = "C:/keys/"+dapet[0]+"_private.key";
 //                        byte[] test = input.getBytes("ISO-8859-1");
                         byte[] decodedBytes = Base64.decodeBase64(input);
 //                        System.out.println(input);
 //                        System.out.println("panjaang"+decodedBytes.length);
                         ObjectInputStream inputStream = null;
-                        inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
+                        inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
                         final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
                         final String plainText = decrypt(decodedBytes, privateKey);
-                        
                         System.out.println(plainText);
                     }
                 }
