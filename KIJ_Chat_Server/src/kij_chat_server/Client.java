@@ -193,7 +193,7 @@ public class Client implements Runnable{
                                             messageOut += vals[j] + " ";
                                         }
                                         System.out.println(this.username + " to alls: " + messageOut);
-                                        outDest.println(this.username + " <BROADCAST>: " + messageOut);
+                                        outDest.println(this.username +"_<BROADCAST>:_" + messageOut);
                                         outDest.flush();
                                     }
                                 }

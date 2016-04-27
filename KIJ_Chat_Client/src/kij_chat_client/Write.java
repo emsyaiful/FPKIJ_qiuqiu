@@ -70,7 +70,22 @@ public class Write implements Runnable {
                     out.println(input);//SEND IT TO THE SERVER
                     out.flush();//FLUSH THE STREAM
                     
-                }else if (command.equalsIgnoreCase("pm")) {
+                }
+                else if (command.equalsIgnoreCase("bm")) {
+                    String bm = part[1]; 
+                    if(length > 2)
+                    {
+                        for (int i = 2; i < length; i++) 
+                        {
+                            bm = bm+" "+part[i];
+                        }
+                    }
+                    else bm = part[1];
+                    input = command+" "+bm;
+                    out.println(input);//SEND IT TO THE SERVER
+                    out.flush();//FLUSH THE STREAM
+                }
+                else if (command.equalsIgnoreCase("pm")) {
                     String temp = user.get(0);
                     user.clear();
                     user.add(part[1]);

@@ -45,6 +45,8 @@ public class Read implements Runnable {
             {						
                 if(this.in.hasNext()) { //IF THE SERVER SENT US SOMETHING
                     input = this.in.nextLine();
+                    String cobabm = input.split("_")[0];
+//                    System.out.println(cobabm);
                     if(input.equalsIgnoreCase("SUCCES login")){            
                         System.out.println(input+"TESTING");//PRINT IT OUT
                     }
@@ -56,7 +58,10 @@ public class Read implements Runnable {
                             log.add("true");
                         }
                     }
-                    else
+                    else if(input.split("_")[1].equals("<BROADCAST>:")){ 
+                        System.out.println(input);//PRINT IT OUT
+                    }      
+                    else 
                     {
                         String[] dapet = input.split("_");
                         input = dapet[1];
