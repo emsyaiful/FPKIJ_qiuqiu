@@ -121,7 +121,8 @@ public class Write implements Runnable {
                     user.clear();
                     user.add(temp);
                 }else if (command.equalsIgnoreCase("bm")) { //BROADCAST
-                    String temp = user.get(0);
+                   String temp = user.get(0);
+                    String usert;
                     user.clear();
                     //user.add(part[1]);
                     String data = part[1];
@@ -138,31 +139,33 @@ public class Write implements Runnable {
                     ObjectInputStream inputStream = null;
 /*
                    BAKAL DILOOPING UNTUK SEMUA DATA USER YANG ADA DI FOLDER
+                    */
                     
-      // Encrypt the string using the public key
-                    //String path_to_pub = "C:/keys/"+user.get(0)+"_public.key";
-                    File f = new File(path_to_pub);
-                    if(f.exists() && !f.isDirectory()) {
+                    File folder = new File("C:/keys");
+                    File[] listOfFiles = folder.listFiles();
+
+                    for (int i = 0; i < listOfFiles.length; i++) {
+                        if (listOfFiles[i].isFile()) {
+                            //System.out.println("User " + listOfFiles[i].getName());
+                            usert = listOfFiles[i].getName();
+                            String path_to_pub = "C:/keys/"+usert;
+                            usert = usert.replace("_public.key","");
+                            
                             inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
-                        }else{
-                            get_File(user.get(0)+"_public.key");
-                            inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                            final PublicKey publicKey = (PublicKey) inputStream.readObject();
+                            final byte[] cipherText = encrypt(data, publicKey);
+                    
+                            byte[] encodedBytes = Base64.encodeBase64(cipherText);
+//                           System.out.println("encodedBytes " + new String(encodedBytes));
+                            String Coba = new String(encodedBytes);
+                            input = command+" "+usert+" "+Coba;
+//                          System.out.println("ini yang dikirim"+input);
+                    
+                            out.println(input);//SEND IT TO THE SERVER
+                            out.flush();//FLUSH THE STREAM
                         }
-                    inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
-                    final PublicKey publicKey = (PublicKey) inputStream.readObject();
-                    final byte[] cipherText = encrypt(data, publicKey);
+                     }
                     
-                    byte[] encodedBytes = Base64.encodeBase64(cipherText);
-//                    System.out.println("encodedBytes " + new String(encodedBytes));
-                    String Coba = new String(encodedBytes);
-                    
-                    input = command+" "+user.get(0)+" "+Coba;
-//                    System.out.println("ini yang dikirim"+input);
-                    
-                    out.println(input);//SEND IT TO THE SERVER
-                    out.flush();//FLUSH THE STREAM
-                    user.clear();
-                    user.add(temp);*/
                 }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
