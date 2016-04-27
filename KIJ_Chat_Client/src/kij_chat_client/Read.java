@@ -60,7 +60,7 @@ public class Read implements Runnable {
                     {
                         String[] dapet = input.split("_");
                         input = dapet[1];
-                        String path_to_priv = "C:/keys/"+user+"_private.key";
+                        String path_to_priv = "C:/keys/"+user.get(0)+"_private.key";
                          byte[] decodedBytes = Base64.decodeBase64(input);
 //                        System.out.println(input);
 //                        System.out.println("panjaang"+decodedBytes.length);

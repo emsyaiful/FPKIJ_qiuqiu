@@ -59,18 +59,21 @@ public class Write implements Runnable {
                 String salt = Character.toString(user.get(0).charAt(0));
                 for (int i = 0; i < user.get(0).length(); i++) {
                     if ((i % 2 != 0)) {
-                        salt = salt+Character.toString(user.get(i).charAt(i));
+                        salt = salt+Character.toString(user.get(0).charAt(i));
                     }             
                 }
                 if (command.equalsIgnoreCase("login")) {
                     String passwd = part[2];
                     passwd = SHA1(salt+passwd);
-                    input = command+" "+user+" "+passwd;
+                    input = command+" "+user.get(0)+" "+passwd;
                     System.out.println(input);
                     out.println(input);//SEND IT TO THE SERVER
                     out.flush();//FLUSH THE STREAM
                     
                 }else if (command.equalsIgnoreCase("pm")) {
+                    String temp = user.get(0);
+                    user.clear();
+                    user.add(part[1]);
                     String data = part[2];
                     if(length > 3)
                     {
@@ -85,12 +88,12 @@ public class Write implements Runnable {
                     ObjectInputStream inputStream = null;
 
       // Encrypt the string using the public key
-                    String path_to_pub = "C:/keys/"+user+"_public.key";
+                    String path_to_pub = "C:/keys/"+user.get(0)+"_public.key";
                     File f = new File(path_to_pub);
                     if(f.exists() && !f.isDirectory()) {
                             inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
                         }else{
-                            get_File(user+"_public.key");
+                            get_File(user.get(0)+"_public.key");
                             inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
                         }
                     inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
@@ -110,11 +113,13 @@ public class Write implements Runnable {
 //                    final String plainText = decrypt(test, privateKey);
                     
 //                    System.out.println(plainText);
-                    input = command+" "+user+" "+Coba;
+                    input = command+" "+user.get(0)+" "+Coba;
 //                    System.out.println("ini yang dikirim"+input);
                     
                     out.println(input);//SEND IT TO THE SERVER
                     out.flush();//FLUSH THE STREAM
+                    user.clear();
+                    user.add(temp);
                 }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
