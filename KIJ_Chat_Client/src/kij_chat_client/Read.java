@@ -27,9 +27,9 @@ public class Read implements Runnable {
     String input;
     boolean keepGoing = true;
     ArrayList<String> log;
-    String user;
+    ArrayList<String> user;
 
-    public Read(Scanner in, ArrayList<String> log, String user)
+    public Read(Scanner in, ArrayList<String> log, ArrayList<String> user)
     {
         this.user = user;
             this.in = in;
@@ -68,10 +68,11 @@ public class Read implements Runnable {
                         File f = new File(path_to_priv);
                         if(f.exists() && !f.isDirectory()) {
                             inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
-                        }else{
+                        }
+//                        else{
 //                            get_File(dapet[0]+"_private.key");
 //                            inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
-                        }
+//                        }
 //                        byte[] test = input.getBytes("ISO-8859-1");
                         final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
                         final String plainText = decrypt(decodedBytes, privateKey);

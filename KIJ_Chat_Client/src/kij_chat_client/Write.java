@@ -34,9 +34,9 @@ public class Write implements Runnable {
     private PrintWriter out;
     boolean keepGoing = true;
     ArrayList<String> log;
-    String user;
+    ArrayList<String> user;
 
-    public Write(Scanner chat, PrintWriter out, ArrayList<String> log, String user)
+    public Write(Scanner chat, PrintWriter out, ArrayList<String> log, ArrayList<String> user)
     {
         this.user = user;
         this.chat = chat;
@@ -55,11 +55,11 @@ public class Write implements Runnable {
                 String[] part = input.split(" ");
                 int length = part.length;
                 String command = part[0];
-                user = part[1];
-                String salt = Character.toString(user.charAt(0));
-                for (int i = 0; i < user.length(); i++) {
+                user.add(part[1]);
+                String salt = Character.toString(user.get(0).charAt(0));
+                for (int i = 0; i < user.get(0).length(); i++) {
                     if ((i % 2 != 0)) {
-                        salt = salt+Character.toString(user.charAt(i));
+                        salt = salt+Character.toString(user.get(i).charAt(i));
                     }             
                 }
                 if (command.equalsIgnoreCase("login")) {

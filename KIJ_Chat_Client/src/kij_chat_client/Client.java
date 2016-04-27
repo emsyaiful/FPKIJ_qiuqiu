@@ -16,7 +16,7 @@ public class Client implements Runnable {
         
         // use arraylist -> arraylist dapat diparsing as reference
         volatile ArrayList<String> log = new ArrayList<>();
-        String user;
+        ArrayList<String> user = new ArrayList<>();
         
 	public Client(Socket s)
 	{
