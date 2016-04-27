@@ -27,9 +27,11 @@ public class Read implements Runnable {
     String input;
     boolean keepGoing = true;
     ArrayList<String> log;
+    String user;
 
-    public Read(Scanner in, ArrayList<String> log)
+    public Read(Scanner in, ArrayList<String> log, String user)
     {
+        this.user = user;
             this.in = in;
             this.log = log;
     }
@@ -58,7 +60,7 @@ public class Read implements Runnable {
                     {
                         String[] dapet = input.split("_");
                         input = dapet[1];
-                        String path_to_priv = "C:/keys/"+dapet[0]+"_private.key";
+                        String path_to_priv = "C:/keys/"+user+"_private.key";
                          byte[] decodedBytes = Base64.decodeBase64(input);
 //                        System.out.println(input);
 //                        System.out.println("panjaang"+decodedBytes.length);
@@ -67,8 +69,8 @@ public class Read implements Runnable {
                         if(f.exists() && !f.isDirectory()) {
                             inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
                         }else{
-                            get_File(dapet[0]+"_private.key");
-                            inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
+//                            get_File(dapet[0]+"_private.key");
+//                            inputStream = new ObjectInputStream(new FileInputStream(path_to_priv));
                         }
 //                        byte[] test = input.getBytes("ISO-8859-1");
                         final PrivateKey privateKey = (PrivateKey) inputStream.readObject();

@@ -59,12 +59,9 @@ class input {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
- 
             outputStream.close();
             inputStream.close();
- 
 //            System.out.println("File downloaded");
-            
         } else {
             System.out.println("No file to download. Server replied HTTP code: " + responseCode);
         }

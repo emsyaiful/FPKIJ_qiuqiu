@@ -16,6 +16,7 @@ public class Client implements Runnable {
         
         // use arraylist -> arraylist dapat diparsing as reference
         volatile ArrayList<String> log = new ArrayList<>();
+        String user;
         
 	public Client(Socket s)
 	{
@@ -41,11 +42,11 @@ public class Client implements Runnable {
 //				if(in.hasNext())//IF THE SERVER SENT US SOMETHING
 //					System.out.println(in.nextLine());//PRINT IT OUT
 //			}
-                Read reader = new Read(in, log);	
+                Read reader = new Read(in, log, user);	
                 Thread tr = new Thread(reader);
                 tr.start();
 
-                Write writer = new Write(chat, out, log);	
+                Write writer = new Write(chat, out, log, user);	
                 Thread tw = new Thread(writer);
                 tw.start();
 
