@@ -11,11 +11,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Scanner;
+import static kij_chat_client.EncryptionUtil.PRIVATE_KEY_FILE;
 import static kij_chat_client.EncryptionUtil.PUBLIC_KEY_FILE;
+import static kij_chat_client.EncryptionUtil.decrypt;
 import static kij_chat_client.EncryptionUtil.encrypt;
+import org.apache.commons.codec.binary.Base64;
 //import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
@@ -81,9 +85,22 @@ public class Write implements Runnable {
                     final PublicKey publicKey = (PublicKey) inputStream.readObject();
                     final byte[] cipherText = encrypt(data, publicKey);
                     
-                    String Coba = new String(cipherText,"ISO-8859-1");
+                    byte[] encodedBytes = Base64.encodeBase64(cipherText);
+//                    System.out.println("encodedBytes " + new String(encodedBytes));
+                    String Coba = new String(encodedBytes);
+                    
+//                    byte[] test = Coba.getBytes("ISO-8859-1");
+//                    System.out.println("Sebelum dikirm KE server"+test);
+//                    System.out.println(test.length);
+//                    
+//                    inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
+//                    final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+//                    final String plainText = decrypt(test, privateKey);
+                    
+//                    System.out.println(plainText);
                     input = command+" "+user+" "+Coba;
-//                    System.out.println(input);
+//                    System.out.println("ini yang dikirim"+input);
+                    
                     out.println(input);//SEND IT TO THE SERVER
                     out.flush();//FLUSH THE STREAM
                 }

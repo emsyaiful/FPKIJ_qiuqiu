@@ -46,7 +46,7 @@ public class Client implements Runnable{
 //					out.flush();//FLUSH THE STREAM
                         // param LOGIN <userName> <pass>
                         System.out.println("INI INPUT");
-                        System.out.println(input);
+                        System.out.println("masuk server="+input);
                         if (input.split(" ")[0].toLowerCase().equals("login") == true) {
                             String[] vals = input.split(" ");
                             if (this._userlist.contains(new Pair(vals[1], vals[2])) == true) {
@@ -87,18 +87,25 @@ public class Client implements Runnable{
                         // param PM <userName dst> <message>
                         if (input.split(" ")[0].toLowerCase().equals("pm") == true) {
                             String[] vals = input.split(" ");
-                            System.out.println("COBA");
+                            System.out.println("masuk pm");
                             boolean exist = false;
 
                             for(Pair<Socket, String> cur : _loginlist) {
                                 if (cur.getSecond().equals(vals[1])) {
                                     PrintWriter outDest = new PrintWriter(cur.getFirst().getOutputStream());
-                                    String messageOut = "";
-                                    for (int j = 2; j<vals.length; j++) {
-                                        messageOut += vals[j] + " ";
-                                    }
+                                    
+                                    String part[] = input.split(vals[1]);
+                                    String messageOut = part[1].substring(1);
+                                    System.out.println(part[1]);
+//                                    String messageOut = part[1];
+//                                    for (int j = 2; j<vals.length; j++) {
+//                                        messageOut += vals[j] + " ";
+//                                    }
                                     System.out.println(this.username + " to " + vals[1] + " : " + messageOut);
-                                    outDest.println(this.username + ": " + messageOut);
+//                                    byte[] test = messageOut.getBytes("ISO-8859-1");
+////                                    System.out.println("yang diterima server"+test);
+//                                    System.out.println("panjaangdiserver"+test.length);
+                                    outDest.println(messageOut);
                                     outDest.flush();
                                     exist = true;
                                 }

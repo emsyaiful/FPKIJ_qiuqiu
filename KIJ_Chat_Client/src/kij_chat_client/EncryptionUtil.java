@@ -22,6 +22,7 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import javax.crypto.Cipher;
+import org.apache.commons.codec.binary.Base64;
 //import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -148,7 +149,7 @@ public class EncryptionUtil {
         generateKey();
       }
 
-      final String originalText = "Text to be encrypted ";
+      final String originalText = "Coba Coba to be encrypted ";
       ObjectInputStream inputStream = null;
 
       // Encrypt the string using the public key
@@ -159,19 +160,27 @@ public class EncryptionUtil {
       System.out.println(cipherText.length);
 //      // Decrypt the cipher text using the private key.
 ////      String string = new String(byte[] bytes, Charset charset);
-      String Coba = new String(cipherText,"ISO-8859-1");
+//      String Coba = new String(cipherText,"");
+//      byte[] decodedBytes = Base64.decodeBase64(cipherText);
+        byte[] encodedBytes = Base64.encodeBase64(cipherText);
+        System.out.println("encodedBytes " + new String(encodedBytes));
+//        System.out.println(Coba);
 //          String Coba = new String(cipherText, StandardCharsets.UTF_8);
 //        System.out.println(Coba);
-          byte[] test = Coba.getBytes("ISO-8859-1");
-      System.out.println(test.length);
+//          byte[] test = Coba.getBytes("ISO-8859-1");
+        byte[] decodedBytes = Base64.decodeBase64(encodedBytes);
+//        System.out.println("decodedBytes " + new String(decodedBytes));
+//          System.out.println(test);
+//          System.out.println(cipherText);
+//      System.out.println(test.length);
       
       inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
       final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-      final String plainText = decrypt(test, privateKey);
+      final String plainText = decrypt(decodedBytes, privateKey);
       
       // Printing the Original, Encrypted and Decrypted Text
       System.out.println("Original: " + originalText);
-      System.out.println("Encrypted: " +Coba);
+      System.out.println("Encrypted: " +cipherText);
       System.out.println("Decrypted: " + plainText);
 
     } catch (Exception e) {
