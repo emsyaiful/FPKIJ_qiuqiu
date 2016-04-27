@@ -135,6 +135,51 @@ public class Write implements Runnable {
                     out.flush();//FLUSH THE STREAM
                     user.clear();
                     user.add(temp);
+                }else if (command.equalsIgnoreCase("bm")) { //BROADCAST
+                   String temp = user.get(0);
+                    String usert;
+                    user.clear();
+                    //user.add(part[1]);
+                    String data = part[1];
+                    if(length > 2)
+                    {
+                        for (int i = 2; i < length; i++) 
+                        {
+                            data = data+" "+part[i];
+                        }
+                    }
+                    else data = part[1];
+//                    System.out.println(data);
+                    // Ekripsinya disini
+                    ObjectInputStream inputStream = null;
+/*
+                   BAKAL DILOOPING UNTUK SEMUA DATA USER YANG ADA DI FOLDER
+                    */
+                    
+                    File folder = new File("C:/keys");
+                    File[] listOfFiles = folder.listFiles();
+
+                    for (int i = 0; i < listOfFiles.length; i++) {
+                        if (listOfFiles[i].isFile()) {
+                            //System.out.println("User " + listOfFiles[i].getName());
+                            usert = listOfFiles[i].getName();
+                            String path_to_pub = "C:/keys/"+usert;
+                            usert = usert.replace("_public.key","");
+                            
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                            final PublicKey publicKey = (PublicKey) inputStream.readObject();
+                            final byte[] cipherText = encrypt(data, publicKey);
+                    
+                            byte[] encodedBytes = Base64.encodeBase64(cipherText);
+//                           System.out.println("encodedBytes " + new String(encodedBytes));
+                            String Coba = new String(encodedBytes);
+                            input = "pm "+usert+" "+Coba; //jadi di PM satu2
+                    
+                            out.println(input);//SEND IT TO THE SERVER
+                            out.flush();//FLUSH THE STREAM
+                        }
+                     }
+                    
                 }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
