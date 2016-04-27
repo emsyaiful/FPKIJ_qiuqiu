@@ -120,6 +120,49 @@ public class Write implements Runnable {
                     out.flush();//FLUSH THE STREAM
                     user.clear();
                     user.add(temp);
+                }else if (command.equalsIgnoreCase("bm")) { //BROADCAST
+                    String temp = user.get(0);
+                    user.clear();
+                    //user.add(part[1]);
+                    String data = part[1];
+                    if(length > 2)
+                    {
+                        for (int i = 2; i < length; i++) 
+                        {
+                            data = data+" "+part[i];
+                        }
+                    }
+                    else data = part[1];
+//                    System.out.println(data);
+                    // Ekripsinya disini
+                    ObjectInputStream inputStream = null;
+/*
+                   BAKAL DILOOPING UNTUK SEMUA DATA USER YANG ADA DI FOLDER
+                    
+      // Encrypt the string using the public key
+                    //String path_to_pub = "C:/keys/"+user.get(0)+"_public.key";
+                    File f = new File(path_to_pub);
+                    if(f.exists() && !f.isDirectory()) {
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                        }else{
+                            get_File(user.get(0)+"_public.key");
+                            inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                        }
+                    inputStream = new ObjectInputStream(new FileInputStream(path_to_pub));
+                    final PublicKey publicKey = (PublicKey) inputStream.readObject();
+                    final byte[] cipherText = encrypt(data, publicKey);
+                    
+                    byte[] encodedBytes = Base64.encodeBase64(cipherText);
+//                    System.out.println("encodedBytes " + new String(encodedBytes));
+                    String Coba = new String(encodedBytes);
+                    
+                    input = command+" "+user.get(0)+" "+Coba;
+//                    System.out.println("ini yang dikirim"+input);
+                    
+                    out.println(input);//SEND IT TO THE SERVER
+                    out.flush();//FLUSH THE STREAM
+                    user.clear();
+                    user.add(temp);*/
                 }
                 if (input.contains("logout")) {
                     if (log.contains("true"))
