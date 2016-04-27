@@ -158,8 +158,7 @@ public class Write implements Runnable {
                             byte[] encodedBytes = Base64.encodeBase64(cipherText);
 //                           System.out.println("encodedBytes " + new String(encodedBytes));
                             String Coba = new String(encodedBytes);
-                            input = command+" "+usert+" "+Coba;
-//                          System.out.println("ini yang dikirim"+input);
+                            input = "pm "+usert+" "+Coba; //jadi di PM satu2
                     
                             out.println(input);//SEND IT TO THE SERVER
                             out.flush();//FLUSH THE STREAM
